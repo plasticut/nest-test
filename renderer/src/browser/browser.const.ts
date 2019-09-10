@@ -1,0 +1,1 @@
+export const BROWSER_PROVIDER = 'BROWSER_PROVIDER';

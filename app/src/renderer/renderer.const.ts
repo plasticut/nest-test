@@ -1,0 +1,1 @@
+export const RENDERER_CLIENT = 'NEST_TEST_RENDERER';

@@ -1,0 +1,54 @@
+version: "3"
+
+services:
+  app:
+    container_name: nest-test-app
+    build:
+      context: ./
+      dockerfile: ./app/Dockerfile
+    ports:
+      - 3000:3000
+    networks:
+      - app-tier
+    environment:
+      NODE_ENV: development
+      MONGODB_URI: mongodb://mongodb:27017/nest-test
+      RABBITMQ_URI: amqp://user:bitnami@rabbitmq:5672
+    command: npm start
+
+  renderer:
+    container_name: nest-test-renderer
+    build:
+      context: ./
+      dockerfile: ./renderer/Dockerfile
+    networks:
+      - app-tier
+    environment:
+      NODE_ENV: development
+      RABBITMQ_URI: amqp://user:bitnami@rabbitmq:5672
+    command: npm start
+
+  rabbitmq:
+    image: 'bitnami/rabbitmq:latest'
+    hostname: rabbitmq
+    networks:
+      - app-tier
+    ports:
+      - 4369:4369
+      - 5672:5672
+      - 15672:15672
+      - 25672:25672
+
+  # mongodb:
+  #   image: mongo:4.0
+  #   hostname: mongodb
+  #   container_name: mongodb
+  #   restart: always
+  #   networks:
+  #     - app-tier
+  #   environment:
+  #     MONGO_INITDB_DATABASE: nest-test
+
+networks:
+  app-tier:
+    driver: bridge
