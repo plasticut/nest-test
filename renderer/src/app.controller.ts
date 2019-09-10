@@ -10,9 +10,7 @@ export class AppController {
   @MessagePattern({
     cmd: 'screenshot',
   })
-  async screenshot(
-    params: ScreenshotDTO,
-  ): Promise<Buffer> {
+  async screenshot(params: ScreenshotDTO): Promise<Buffer> {
     return await this.appService.screenshot(params);
   }
 }

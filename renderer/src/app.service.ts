@@ -5,10 +5,7 @@ import { ScreenshotDTO } from '../../dto/screenshot.dto';
 
 @Injectable()
 export class AppService {
-  constructor(
-    @Inject(BROWSER_PROVIDER) private readonly browser: Browser,
-  ) {
-  }
+  constructor(@Inject(BROWSER_PROVIDER) private readonly browser: Browser) {}
 
   async screenshot({ url, type }: ScreenshotDTO): Promise<Buffer> {
     const page = await this.browser.newPage();
@@ -20,7 +17,7 @@ export class AppService {
     const screenshot = await page.screenshot({
       encoding: 'binary',
       type,
-      fullPage: true
+      fullPage: true,
     });
 
     page.close();

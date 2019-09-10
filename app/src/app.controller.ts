@@ -6,12 +6,13 @@ import { Response } from 'express';
 
 @Controller()
 export class AppController {
-  constructor(
-    private readonly appService: AppService,
-  ) {}
+  constructor(private readonly appService: AppService) {}
 
   @Get('screenshot')
-  async getScreenshot(@Query() query: ScreenshotDTO, @Res() response: Response): Promise<void> {
+  async getScreenshot(
+    @Query() query: ScreenshotDTO,
+    @Res() response: Response,
+  ): Promise<void> {
     const screenshot = await this.appService.getScreenshot(query);
 
     response.set('cache-control', 'none');
